@@ -1,0 +1,32 @@
+1. Dockerfile_conda_base
+    sudo docker build -t imagename .
+
+    sudo docker run -it -p 7777:7777 -p 8501:8501 -v "$PWD":/docroot -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul imagename
+    conda create -n streamlitEnv pip python=3.8
+    conda activate streamlitEnv
+    conda install jupyter notebook
+    pip install matplotlib
+    pip install streamlit
+    pip install scikit-learn
+    mkdir docroot
+    cd docroot
+
+    docker commit container newImage
+
+    sudo docker run -it -p 7777:7777 -p 8501:8501 -v "$PWD":/docroot -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul newImage
+    conda activate streamlitEnv
+    cd docroot
+    jupyter notebook --port=7777 --ip=0.0.0.0 --allow-root
+
+    docker stop container
+    poweroff
+    reboot
+    docker start container
+    docker exec -it container bash
+    conda activate streamlitEnv
+    cd docroot
+    jupyter notebook --port=7777 --ip=0.0.0.0 --allow-root
+
+2. Dockerfile
+docker build -t ncia_edu_4 .
+docker run -it -p 7777:7777 -p 8501:8501 -v "$PWD":/docroot -v /etc/localtime:/etc/localtime:ro ncia_edu_4
